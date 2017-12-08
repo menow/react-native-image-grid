@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, Dimensions, ImageBackground } from 'react-native'
 import _ from 'lodash'
 import ImageLoad from 'react-native-image-placeholder'
 
@@ -57,22 +57,20 @@ class PhotoGrid extends Component {
       <View style={[{ flexDirection: direction, width, height }, this.props.styles]}>
         <View style={{ flex: 1, flexDirection: direction === 'row' ? 'column' : 'row' }}>
           {firstViewImages.map((image, index) => (
-            <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-              onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
+            <View key={index} style={{ flex: 1 }}>
               <ImageLoad
                 style={[styles.image, { width: firstImageWidth, height: firstImageHeight }, this.props.imageStyle]}
                 source={typeof image === 'string' ? { uri: image } : image}
                 {...imageProps}
               />
-            </TouchableOpacity>
+            </View>
           ))}
         </View>
         {
           secondViewImages.length ? (
             <View style={{ width: secondViewWidth, height: secondViewHeight, flexDirection: direction === 'row' ? 'column' : 'row' }}>
               {secondViewImages.map((image, index) => (
-                <TouchableOpacity activeOpacity={0.7} key={index} style={{ flex: 1 }}
-                  onPress={() => this.props.onPressImage && this.props.onPressImage(image)}>
+                <View key={index} style={{ flex: 1 }}>
                   {this.props.source.length > 5 && index === secondViewImages.length - 1 ? (
                     <ImageBackground
                       style={[styles.image, { width: secondImageWidth, height: secondImageHeight }, this.props.imageStyle]}
@@ -88,7 +86,7 @@ class PhotoGrid extends Component {
                       source={typeof image === 'string' ? { uri: image } : image}
                       {...imageProps}
                     />}
-                </TouchableOpacity>
+                </View>
               ))}
             </View>
           ) : null
@@ -104,7 +102,6 @@ PhotoGrid.prototypes = {
   height: PropTypes.number,
   style: PropTypes.object,
   imageStyle: PropTypes.object,
-  onPressImage: PropTypes.func,
   ratio: PropTypes.float,
   imageProps: PropTypes.object
 }
